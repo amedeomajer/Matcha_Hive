@@ -72,6 +72,7 @@ const register = (request, response) => {
 	const password = request.body.password;
 	const username = request.body.username;
 	const sqlEmailCheck = 'SELECT * FROM users WHERE email = ?';
+	
 	db.query(sqlEmailCheck, [email],
 		function (error, result) {
 			if (error) {
@@ -210,12 +211,12 @@ const activateUser = (request, response) => {
 	}) 
 }
 
-const completeAccount = (request, response) => {
+const completeAccount = async (request, response) => {
 
 	const token = request.cookies.token;
-	let decodedToken = verifyToken(token);
+	let decodedToken = await verifyToken(token); 
 	
-	const username  = request.body.username
+
 	const gender = request.body.gender;
 	const bio = request.body.bio;
 	const noWhiteSpaceBio = bio.replaceAll(' ', '');
@@ -276,10 +277,10 @@ const completeAccount = (request, response) => {
 }
 }
 
-const addPhotos = (request, response) => {
+const addPhotos = async (request, response) => {
 
 
-	const user = verifyToken(request.cookies.token);
+	const user = await verifyToken(request.cookies.token);
 	let i = request.files.length;
 	
 	request.files.forEach(image => {
@@ -305,7 +306,7 @@ const  getAllUsers = (request, response) => {
 			response.send(result);
 		})
 }
-const filterUsers = (request, response) => {
+const filterUsers = async (request, response) => {
 
 	const filterByTags = (user, interests) => {
 		let i = 0;
@@ -321,7 +322,7 @@ const filterUsers = (request, response) => {
 		return i > 0 ? user : null;
 	}
 
-	const user = verifyToken(request.cookies.token);
+	const user = await verifyToken(request.cookies.token);
 	const gender = request.body.gender; //
 	const preference = request.body.preference; //
 	const interests = request.body.tags; //

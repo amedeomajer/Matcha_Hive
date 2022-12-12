@@ -39,7 +39,6 @@ const HomePage = () => {
 			else if (response.data === 'valid') {
 				setLogin(true);
 				getUser({target: "self"}).then((response) => {
-					console.log(response.data);
 					if (response.data.basicInfo.acti_stat === 2)
 						navigate('/completeaccount/photos');
 					else if (response.data.basicInfo.acti_stat === 1)

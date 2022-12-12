@@ -140,15 +140,6 @@ const PersonalDetailsForm = () => {
 		}
 	}
 
-	const handleLogout = (e) => {
-		e.preventDefault()
-		logOut().then(response => {
-			setLogin(false);
-			Navigate('/');
-			socket.emit('login');
-		})
-	};
-
 	return (
 	<div className='p-5'>
 		<div className='input-group flex-column m-40 text-secondary'>

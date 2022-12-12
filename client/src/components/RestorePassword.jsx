@@ -89,7 +89,7 @@ const RestorePassword = () => {
             }
             else if (response.data === 'no') {
 
-                    setShowError('Are you fucking kidding me?')
+                    setShowError('Email not found !')
             }
         })
     }

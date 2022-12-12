@@ -16,6 +16,7 @@ import {disliked} from "../services/notifications"
 import { useContext } from "react";
 import { motion } from "framer-motion"
 import { updateViewStats, updateLikeStats } from "../services/stats";
+import { useNavigate } from "react-router-dom";
 
 const LoginStatus = ({user}) => {
 	const socket = useContext(SocketContext);
@@ -138,11 +139,22 @@ const ProfileCard = ({setShow, setUsers, users, target, setDisplayUsers, display
 	const socket = useContext(SocketContext);
 	const [infoShow, setInfoShow] = useState(false);
 	const [animation, setAnimation] = useState({ x: 0, y: 0 });
+	const navigate = useNavigate();
 
 	useEffect(() => {
-
 		const obj = { target: target }
 		getUser(obj).then(response => {
+
+			if (target === 'self') {
+				if (response.data.basicInfo.acti_stat === 2) {
+					navigate('/completeaccount/photos');
+					return;
+				}
+				else if (response.data.basicInfo.acti_stat === 1) {
+					navigate('/completeaccount');
+					return;
+				}
+			}
 			setUsername(response.data.basicInfo.username)
 			setName(response.data.basicInfo.name)
 			setLastName(response.data.basicInfo.lastName)
@@ -165,6 +177,7 @@ const ProfileCard = ({setShow, setUsers, users, target, setDisplayUsers, display
 							response.data.locations.ip_city;
 			setLocation(locationTemp)
 		})
+		// eslint-disable-next-line
 	}, [target])
 	
 	const calculateAge = (birthday) => {
