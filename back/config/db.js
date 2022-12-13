@@ -2259,6 +2259,7 @@ con.connect(async (err) => {
 			else {
 				console.log('\x1b[36m%s\x1b[0m', "tags table created");
 				tags.forEach((tag) => {
+					console.log(tag);
 					db.query(`INSERT INTO tags (tag) VALUES (?)`, [tag], (err, result) => {
 						if (err) console.log(err);
 						});
@@ -2631,7 +2632,7 @@ con.connect(async (err) => {
 				console.log(err);
 			} else if (result.length === 0) {
 	
-				while (i < 2008) {
+				while (i < 700) {
 					process.stdout.clearLine();
 					process.stdout.cursorTo(0);
 					process.stdout.write('users generated ' + i);
